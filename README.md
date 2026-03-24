@@ -16,7 +16,9 @@
 ## Tech Stack
 - **Three.js** (WebGL 3D Rendering Engine)
 - **Vue.js 3** (Reactive UI & State Management)
-- **HTML/CSS** (Vanilla layout and glassmorphism styling)
+- **Tailwind CSS v4** (Utility-first styling)
+- **Vite** (Next-generation build tool)
+- **TypeScript** (Type-safe logic)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. Copyright (c) 2026 Hall of the Gods, Inc.

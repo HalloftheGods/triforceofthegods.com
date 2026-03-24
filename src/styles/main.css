@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+:root {
+  --gold: #d4af37;
+  --bg: #030305;
+  --text-main: rgba(255, 255, 255, 0.85);
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --cyan: #00f3ff;
+}
+
+@theme {
+  --color-gold: var(--gold);
+  --color-bg: var(--bg);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-cyan: var(--cyan);
+}
+
+body,
+html,
+#app {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: 'Courier New', Courier, monospace;
+  overflow: hidden;
+  user-select: none;
+}
