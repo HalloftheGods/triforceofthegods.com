@@ -35,7 +35,7 @@ export class ThreeEngine {
     this.sacredGeometry.add(this.fractalGroup);
 
     this.wireMaterial = new THREE.LineDashedMaterial({
-      color: 0xd4af37,
+      color: 0xd9be6f,
       transparent: true,
       opacity: 0,
       dashSize: 10,

@@ -4,7 +4,7 @@
   >
     <BaseText
       tag="div"
-      customClass="absolute top-16 left-0 w-full text-center text-[2.05rem] tracking-[1em] text-gold uppercase opacity-60 pointer-events-none drop-shadow-[0_0_20px_rgba(212,175,55,0.3)]"
+      customClass="absolute top-16 left-0 w-full text-center text-[2.05rem] tracking-[1em] text-gold uppercase opacity-60 pointer-events-none drop-shadow-[0_0_20px_rgba(var(--gold-rgb),0.3)]"
     >
       Triforce of the Gods
     </BaseText>

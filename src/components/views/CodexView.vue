@@ -77,8 +77,8 @@ const threeState: ThreeState = {
   targetFractalLevel: 0,
   scaleLerpSpeed: 0.05,
   drawProgress: 0, targetDrawProgress: 0, drawSpeed: 0.015,
-  color: new THREE.Color(0xd4af37),
-  targetColor: new THREE.Color(0xd4af37),
+  color: new THREE.Color(0xd9be6f),
+  targetColor: new THREE.Color(0xd9be6f),
   spinX: spinX.value,
   spinY: spinY.value,
   spinZ: spinZ.value,
@@ -159,7 +159,7 @@ watch(activeAxiom, (newVal) => {
       threeState.targetTesseractIntensity = 0; threeState.targetFractalLevel = 1;
       threeState.targetScale = 0.52; threeState.targetOpacity = 0.8;
       threeState.drawProgress = 1.0; threeState.targetDrawProgress = 1.0;
-      threeState.targetColor.setHex(0xd4af37); break;
+      threeState.targetColor.setHex(0xd9be6f); break;
     case 2:
       isFlat.value = false; spinX.value = false; spinY.value = true; spinZ.value = false;
       threeState.targetFlatten = 0.0; threeState.targetTriforceMode = 0.0;
@@ -186,14 +186,14 @@ watch(activeAxiom, (newVal) => {
       threeState.targetFractalLevel = 4; threeState.targetScale = 0.92; break;
     case 7:
       threeState.targetPointOpacity = 0.4; threeState.targetTesseractIntensity = 0.6;
-      threeState.targetFractalLevel = 5; threeState.targetScale = 1; break;
+      threeState.targetFractalLevel = 4; threeState.targetScale = 1; break;
     case 8:
       threeState.targetPointOpacity = 0.6; threeState.targetTesseractIntensity = 1.0;
-      threeState.targetFractalLevel = 6; threeState.targetScale = 1; break;
+      threeState.targetFractalLevel = 4; threeState.targetScale = 1; break;
     case 9:
       threeState.targetPointOpacity = 0.8; threeState.targetTesseractIntensity = 0.0;
       threeState.targetQuantumSolve = 1.0; threeState.targetFlatten = 0.0;
-      threeState.targetFractalLevel = 6; threeState.targetScale = 1.0; break;
+      threeState.targetFractalLevel = 4; threeState.targetScale = 1.0; break;
   }
 }, { immediate: true });
 
