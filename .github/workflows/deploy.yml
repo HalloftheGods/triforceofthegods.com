@@ -27,7 +27,7 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -44,10 +44,11 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install
-      - name: Build
-        run: pnpm run build
+      - name: Install dependencies & Build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run build
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
