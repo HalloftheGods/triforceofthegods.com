@@ -33,13 +33,13 @@ import CodexViewer from '../organisms/CodexViewer.vue';
 import CodexPagination from '../molecules/CodexPagination.vue';
 import DebugControls from '../molecules/DebugControls.vue';
 import { ThreeEngine } from '../../engine/ThreeEngine';
-import { ThreeState } from '../../engine/types';
+import type { ThreeState } from '../../engine/types';
 import * as THREE from 'three';
 import { CODEX_DATA, CODEX_STATES } from '../../data/codex';
 
 const activeAxiom = ref(0);
 const maxAxioms = CODEX_DATA.length - 1;
-const currentContent = computed(() => CODEX_DATA[activeAxiom.value]);
+const currentContent = computed(() => CODEX_DATA[activeAxiom.value]!);
 
 const spinX = ref(false);
 const spinY = ref(false);
@@ -124,14 +124,14 @@ watch([spinX, spinY, spinZ, isFlat], () => {
 
 watch(activeAxiom, (newVal) => {
   if (newVal === 0) threeState.drawProgress = 0;
-  const slug = CODEX_DATA[newVal].chapter.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  if (window.location.hash.substring(1) !== slug) {
+  const slug = CODEX_DATA[newVal]!.chapter.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  if (typeof window !== 'undefined' && window.location.hash.substring(1) !== slug) {
     window.history.replaceState(null, '', `#${slug}`);
   }
 
   threeState.scaleLerpSpeed = 0.05;
 
-  const config = CODEX_STATES[newVal];
+  const config = CODEX_STATES[newVal]!;
   
   isFlat.value = config.isFlat;
   spinX.value = config.spinX;

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { ThreeState } from './types';
+import type { ThreeState } from './types';
 import { buildFractal } from './FractalBuilder';
 
 export class ThreeEngine {
@@ -12,7 +12,7 @@ export class ThreeEngine {
   private fractalSteps: THREE.Group[] = [];
   private wireMaterial: THREE.LineDashedMaterial;
   private pointMaterial: THREE.PointsMaterial;
-  private particleSystem: THREE.Points;
+  private particleSystem!: THREE.Points;
   private clockTime = 0;
   private isDragging = false;
   private previousMousePosition = { x: 0, y: 0 };
@@ -73,7 +73,7 @@ export class ThreeEngine {
       this.fractalSteps.push(stepMesh);
       this.fractalGroup.add(stepMesh);
     }
-    this.fractalSteps[0].visible = true;
+    this.fractalSteps[0]!.visible = true;
   }
 
   private initParticles() {
@@ -126,7 +126,7 @@ export class ThreeEngine {
     this.wireMaterial.color.lerp(this.state.targetColor, 0.05);
 
     this.state.drawProgress += (this.state.targetDrawProgress - this.state.drawProgress) * this.state.drawSpeed;
-    this.wireMaterial.dashOffset = 5.0 * (1.0 - this.state.drawProgress);
+    (this.wireMaterial as any).dashOffset = 5.0 * (1.0 - this.state.drawProgress);
 
     if (this.state.flatten > 0.5 && this.state.quantumSolve < 0.5) {
       const qTarget = new THREE.Quaternion().identity();
@@ -186,9 +186,9 @@ export class ThreeEngine {
               const sinT = Math.sin(t);
 
               for (let i = 0; i < pos.length; i += 3) {
-                const x = pos[i];
-                const y = pos[i + 1];
-                const z = pos[i + 2];
+                const x = pos[i]!;
+                const y = pos[i + 1]!;
+                const z = pos[i + 2]!;
 
                 const xRot = x * cosT;
                 const wRotX = x * sinT;

@@ -23,8 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import CodexView from './components/views/CodexView.vue';
 import { version } from '../package.json';
+import '~/assets/css/main.css';
 </script>
 
 <style>

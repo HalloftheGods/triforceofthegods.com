@@ -35,7 +35,7 @@ export function buildFractal(
       [0, 0, 0]
     ];
 
-    const bCol = BRANCH_COLORS[currentBranch];
+    const bCol = BRANCH_COLORS[currentBranch]!;
     const grp = new THREE.Group();
 
     const buildLine = (vIdx1: number, vIdx2: number, isPeak = false) => {
@@ -45,10 +45,10 @@ export function buildFractal(
       const colors = new Float32Array(6);
 
       [vIdx1, vIdx2].forEach((vIdx, i) => {
-        const sv = solidVertices[vIdx];
-        const fv = flatVertices[vIdx];
-        pos[i * 3] = sv[0] + ox; pos[i * 3 + 1] = sv[1] + oy; pos[i * 3 + 2] = sv[2] + oz;
-        flat[i * 3] = fv[0] + ox; flat[i * 3 + 1] = fv[1] + oy; flat[i * 3 + 2] = fv[2] + oz;
+        const sv = solidVertices[vIdx]!;
+        const fv = flatVertices[vIdx]!;
+        pos[i * 3] = sv[0]! + ox; pos[i * 3 + 1] = sv[1]! + oy; pos[i * 3 + 2] = sv[2]! + oz;
+        flat[i * 3] = fv[0]! + ox; flat[i * 3 + 1] = fv[1]! + oy; flat[i * 3 + 2] = fv[2]! + oz;
         colors[i * 3] = bCol.r; colors[i * 3 + 1] = bCol.g; colors[i * 3 + 2] = bCol.b;
       });
 
@@ -71,9 +71,9 @@ export function buildFractal(
     const pFlat = new Float32Array(12);
     const pCol = new Float32Array(12);
     for (let i = 0; i < 4; i++) {
-      const sv = solidVertices[i]; const fv = flatVertices[i];
-      pPos[i * 3] = sv[0] + ox; pPos[i * 3 + 1] = sv[1] + oy; pPos[i * 3 + 2] = sv[2] + oz;
-      pFlat[i * 3] = fv[0] + ox; pFlat[i * 3 + 1] = fv[1] + oy; pFlat[i * 3 + 2] = fv[2] + oz;
+      const sv = solidVertices[i]!; const fv = flatVertices[i]!;
+      pPos[i * 3] = sv[0]! + ox; pPos[i * 3 + 1] = sv[1]! + oy; pPos[i * 3 + 2] = sv[2]! + oz;
+      pFlat[i * 3] = fv[0]! + ox; pFlat[i * 3 + 1] = fv[1]! + oy; pFlat[i * 3 + 2] = fv[2]! + oz;
       pCol[i * 3] = bCol.r; pCol[i * 3 + 1] = bCol.g; pCol[i * 3 + 2] = bCol.b;
     }
     pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
