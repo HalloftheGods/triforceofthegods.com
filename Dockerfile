@@ -1,29 +1,18 @@
-# Build stage
-FROM node:22 AS builder
+FROM node:22
 
 # Enable corepack and use pnpm
 RUN corepack enable
 
 WORKDIR /app
 
-# Copy dependency definition
+# In development, dependencies and code will be mounted from the host OS
+# However, we install them locally inside the image too, as a fallback baseline
 COPY package.json pnpm-lock.yaml ./
-
-# Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Copy the rest of the project
 COPY . .
 
-# Build the site (with GitHub pages preset this will output to .output/public)
-RUN pnpm run build
+EXPOSE 3000
 
-# Serve stage
-FROM nginx:alpine
-# Copy the static assets from builder stage
-COPY --from=builder /app/.output/public /usr/share/nginx/html
-
-EXPOSE 80
-
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start Nuxt DEV server bound to all network interfaces
+CMD ["pnpm", "dev", "--host", "0.0.0.0"]

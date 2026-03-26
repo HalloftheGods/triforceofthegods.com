@@ -24,7 +24,6 @@
 
 <script setup lang="ts">
 import { version } from '../package.json';
-import '~/assets/css/main.css';
 </script>
 
 <style>
