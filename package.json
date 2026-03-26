@@ -1,6 +1,6 @@
 {
   "name": "@hallofthegods/triforceofthegods.com",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Triforce of the Gods - Geometric Visualization",
   "type": "module",
   "scripts": {
