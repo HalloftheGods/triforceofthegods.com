@@ -1,25 +1,45 @@
 <template>
   <BaseContainer customClass="flex-1 max-w-[1100px] text-center px-4 sm:px-12 py-6 sm:py-8 bg-gradient-to-t from-bg/95 to-bg/0 backdrop-blur-[4px] mx-1 sm:mx-5">
-    <BaseText
-      tag="div"
-      customClass="text-[0.8rem] text-white tracking-[0.3em] uppercase mb-2 opacity-80"
-    >
-      {{ content.chapter }}
-    </BaseText>
-    <BaseText
-      tag="h1"
-      :customClass="index % 2 === 0 
-        ? 'text-[1.4rem] sm:text-[1.8rem] text-gold font-bold tracking-[0.08em] mt-0 mb-4 drop-shadow-[0_0_15px_rgba(var(--gold-rgb),0.4)] font-[\'Philosopher\']'
-        : 'text-[1.4rem] sm:text-[1.8rem] text-gold font-bold tracking-[0.08em] mt-0 mb-4 drop-shadow-[0_0_15px_rgba(var(--gold-rgb),0.4)] font-[\'Jura\']'"
-    >
-      {{ content.title }}
-    </BaseText>
-    <BaseText
-      tag="p"
-      customClass="text-[0.95rem] sm:text-[1.05rem] leading-[1.6] text-text-main mb-0"
-    >
-      {{ content.body }}
-    </BaseText>
+    <div class="flex flex-col sm:flex-row justify-between items-center sm:items-end w-full max-w-[850px] mx-auto border-b border-gold/20 pb-4 mb-6 gap-2 sm:gap-0">
+      <BaseText
+        tag="h1"
+        :customClass="index % 2 === 0 
+          ? 'text-[1.6rem] sm:text-[2.0rem] text-white tracking-[0.15em] mt-0 mb-0 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] font-[\'Philosopher\'] text-center sm:text-left leading-none uppercase'
+          : 'text-[1.6rem] sm:text-[2.0rem] text-white tracking-[0.15em] mt-0 mb-0 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)] font-[\'Jura\'] text-center sm:text-left leading-none uppercase'"
+      >
+        {{ content.chapter }}
+      </BaseText>
+      <BaseText
+        tag="div"
+        customClass="text-[0.85rem] sm:text-[1rem] text-gold font-bold tracking-[0.25em] uppercase mb-0 sm:mb-[0.2rem] text-center sm:text-right font-['Jura'] drop-shadow-[0_0_8px_rgba(var(--gold-rgb),0.4)]"
+      >
+        {{ content.title }}
+      </BaseText>
+    </div>
+
+    <div class="flex flex-col gap-4 sm:gap-6 max-w-[850px] mx-auto text-left w-full pl-0 sm:pl-4">
+      <div 
+        v-for="(line, idx) in content.body"
+        :key="idx"
+        class="flex gap-4 sm:gap-5 items-start"
+      >
+        <svg 
+          :class="['w-3 h-3 text-gold mt-[0.35rem] opacity-70 flex-shrink-0 drop-shadow-[0_0_5px_rgba(var(--gold-rgb),0.5)] transition-transform duration-500', idx === 1 ? 'rotate-90' : idx === 2 ? 'rotate-180' : '']" 
+          viewBox="0 0 100 86.6" 
+          fill="currentColor"
+        >
+          <polygon points="50,0 100,86.6 0,86.6" />
+        </svg>
+        <BaseText
+          tag="p"
+          :customClass="idx === 0 
+            ? 'flex-1 text-[0.85rem] sm:text-[0.95rem] leading-[1.6] mb-0 text-white font-[\'Jura\'] font-bold tracking-[0.1em] uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]' 
+            : 'flex-1 text-[0.95rem] sm:text-[1.05rem] leading-[1.6] mb-0 text-text-main opacity-80'"
+        >
+          {{ line }}
+        </BaseText>
+      </div>
+    </div>
 
     <div v-if="content.action" class="mt-8 flex justify-center pb-2">
       <a 
