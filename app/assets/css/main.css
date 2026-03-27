@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Syncopate:wght@400;700&family=Orbitron:wght@400;700&family=Jura:wght@400;600;700&family=Philosopher:wght@400;700&display=swap');
 :root {
   --gold-hex: #d9be6f;
   --gold-rgb: 217, 190, 111;

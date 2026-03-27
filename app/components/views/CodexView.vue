@@ -19,6 +19,7 @@
     </template>
     <template #debug>
       <DebugControls
+        v-if="false"
         :buttons="debugButtons"
         @toggle="toggleDebug"
       />
@@ -28,6 +29,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue';
+import { useRoute, useRouter } from '#imports';
 import MainLayout from '../templates/MainLayout.vue';
 import CodexViewer from '../organisms/CodexViewer.vue';
 import CodexPagination from '../molecules/CodexPagination.vue';
@@ -37,9 +39,24 @@ import type { ThreeState } from '../../engine/types';
 import * as THREE from 'three';
 import { CODEX_DATA, CODEX_STATES } from '../../data/codex';
 
+const route = useRoute();
+const router = useRouter();
+
 const activeAxiom = ref(0);
 const maxAxioms = CODEX_DATA.length - 1;
 const currentContent = computed(() => CODEX_DATA[activeAxiom.value]!);
+
+watch(() => route.params.slug, (newSlug) => {
+  const slugStr = Array.isArray(newSlug) ? newSlug[0] : newSlug;
+  if (!slugStr || slugStr === 'index') {
+    if (activeAxiom.value !== 0) activeAxiom.value = 0;
+    return;
+  }
+  const found = CODEX_DATA.findIndex(d => d.chapter.toLowerCase().replace(/[^a-z0-9]+/g, '-') === slugStr);
+  if (found !== -1 && activeAxiom.value !== found) {
+    activeAxiom.value = found;
+  }
+}, { immediate: true });
 
 const spinX = ref(false);
 const spinY = ref(false);
@@ -79,26 +96,11 @@ onMounted(() => {
   if (container) {
     engine = new ThreeEngine(container, threeState);
     engine.animate();
-
-    // Check for initial hash
-    const initHash = window.location.hash.substring(1);
-    if (initHash) {
-      const found = CODEX_DATA.findIndex(d => d.chapter.toLowerCase().replace(/[^a-z0-9]+/g, '-') === initHash);
-      if (found !== -1) activeAxiom.value = found;
-    }
   }
 
   window.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight' || e.key === ' ') next();
     if (e.key === 'ArrowLeft') prev();
-  });
-
-  window.addEventListener('hashchange', () => {
-    const hash = window.location.hash.substring(1);
-    const found = CODEX_DATA.findIndex(d => d.chapter.toLowerCase().replace(/[^a-z0-9]+/g, '-') === hash);
-    if (found !== -1 && activeAxiom.value !== found) {
-      activeAxiom.value = found;
-    }
   });
 });
 
@@ -125,8 +127,9 @@ watch([spinX, spinY, spinZ, isFlat], () => {
 watch(activeAxiom, (newVal) => {
   if (newVal === 0) threeState.drawProgress = 0;
   const slug = CODEX_DATA[newVal]!.chapter.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  if (typeof window !== 'undefined' && window.location.hash.substring(1) !== slug) {
-    window.history.replaceState(null, '', `#${slug}`);
+  const currentSlug = Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug;
+  if (currentSlug !== slug) {
+    router.push(`/${slug}`);
   }
 
   threeState.scaleLerpSpeed = 0.05;

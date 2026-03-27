@@ -1,7 +1,7 @@
 <template>
   <BaseContainer 
     noRelative
-    customClass="absolute right-12 bottom-8 flex flex-row gap-[10px] pointer-events-auto"
+    customClass="absolute right-4 sm:right-12 bottom-[70px] sm:bottom-8 hidden sm:flex flex-row gap-[10px] pointer-events-auto"
   >
     <BaseButton
       v-for="btn in buttons"

@@ -15,10 +15,15 @@ export class ThreeEngine {
   private particleSystem!: THREE.Points;
   private clockTime = 0;
   private isDragging = false;
+  private userHasRotated = false;
+  private previousTargetFlatten = 0;
+  private previousTargetQuantumSolve = 0;
   private previousMousePosition = { x: 0, y: 0 };
 
   constructor(container: HTMLElement, initialState: ThreeState) {
     this.state = initialState;
+    this.previousTargetFlatten = initialState.targetFlatten;
+    this.previousTargetQuantumSolve = initialState.targetQuantumSolve;
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.camera.position.z = 6;
@@ -94,6 +99,7 @@ export class ThreeEngine {
     window.addEventListener('mouseup', () => this.isDragging = false);
     window.addEventListener('mousemove', (e) => {
       if (this.isDragging) {
+        this.userHasRotated = true;
         const deltaX = (e.offsetX - this.previousMousePosition.x) * 0.005;
         const deltaY = (e.offsetY - this.previousMousePosition.y) * 0.005;
         
@@ -115,6 +121,14 @@ export class ThreeEngine {
     requestAnimationFrame(() => this.animate());
     this.clockTime += 0.015;
 
+    // Detection for transitions: reset rotating state when animation targets change
+    if (this.previousTargetFlatten !== this.state.targetFlatten ||
+        this.previousTargetQuantumSolve !== this.state.targetQuantumSolve) {
+      this.userHasRotated = false;
+      this.previousTargetFlatten = this.state.targetFlatten;
+      this.previousTargetQuantumSolve = this.state.targetQuantumSolve;
+    }
+
     this.state.scale += (this.state.targetScale - this.state.scale) * this.state.scaleLerpSpeed;
     this.state.rotationSpeed += (this.state.targetRotationSpeed - this.state.rotationSpeed) * 0.05;
     this.state.tesseractIntensity += (this.state.targetTesseractIntensity - this.state.tesseractIntensity) * 0.05;
@@ -128,16 +142,18 @@ export class ThreeEngine {
     this.state.drawProgress += (this.state.targetDrawProgress - this.state.drawProgress) * this.state.drawSpeed;
     (this.wireMaterial as any).dashOffset = 5.0 * (1.0 - this.state.drawProgress);
 
-    if (this.state.flatten > 0.5 && this.state.quantumSolve < 0.5) {
-      const qTarget = new THREE.Quaternion().identity();
-      this.sacredGeometry.quaternion.slerp(qTarget, 0.1);
-    }
+    if (!this.isDragging && !this.userHasRotated) {
+      if (this.state.flatten > 0.5 && this.state.quantumSolve < 0.5) {
+        const qTarget = new THREE.Quaternion().identity();
+        this.sacredGeometry.quaternion.slerp(qTarget, 0.1);
+      }
 
-    if (this.state.quantumSolve > 0.5) {
-      const targetRotX = Math.atan(1 / Math.sqrt(2));
-      const targetRotY = Math.PI / 4;
-      const qTarget = new THREE.Quaternion().setFromEuler(new THREE.Euler(targetRotX, targetRotY, 0, 'XYZ'));
-      this.sacredGeometry.quaternion.slerp(qTarget, 0.1);
+      if (this.state.quantumSolve > 0.5) {
+        const targetRotX = Math.atan(1 / Math.sqrt(2));
+        const targetRotY = Math.PI / 4;
+        const qTarget = new THREE.Quaternion().setFromEuler(new THREE.Euler(targetRotX, targetRotY, 0, 'XYZ'));
+        this.sacredGeometry.quaternion.slerp(qTarget, 0.1);
+      }
     }
 
     this.wireMaterial.opacity = this.state.opacity;

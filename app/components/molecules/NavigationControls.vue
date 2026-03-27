@@ -3,15 +3,14 @@
     <BaseButton
       @click="$emit('prev')"
       :disabled="isFirst"
-      customClass="p-4"
+      customClass="p-4 transition-transform hover:scale-110 active:scale-95 disabled:opacity-30 disabled:hover:scale-100"
     >
       <svg
-        width="24"
-        height="24"
         viewBox="0 0 24 24"
+        class="w-10 h-10 sm:w-12 sm:h-12 drop-shadow-[0_0_8px_rgba(var(--gold-rgb),0.5)]"
       >
         <polygon
-          points="16,6 16,18 8,12"
+          points="16,4 16,20 6,12"
           fill="var(--gold)"
         />
       </svg>
@@ -20,15 +19,14 @@
     <BaseButton
       @click="$emit('next')"
       :disabled="isLast"
-      customClass="p-4"
+      customClass="p-4 transition-transform hover:scale-110 active:scale-95 disabled:opacity-30 disabled:hover:scale-100"
     >
       <svg
-        width="24"
-        height="24"
         viewBox="0 0 24 24"
+        class="w-10 h-10 sm:w-12 sm:h-12 drop-shadow-[0_0_8px_rgba(var(--gold-rgb),0.5)]"
       >
         <polygon
-          points="8,6 8,18 16,12"
+          points="8,4 8,20 18,12"
           fill="var(--gold)"
         />
       </svg>
